@@ -1,3 +1,5 @@
+#this model accepts an input with a single feature "input_shape=(1,)" and a single output
+
 import pandas as pd
 import tensorflow as tf
 from matplotlib import pyplot as plt

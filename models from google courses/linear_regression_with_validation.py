@@ -1,4 +1,5 @@
 #How It Works
+#this model accepts an input with a single feature "input_shape=(1,)" and a single output
 #Training Phase: During training, the model is trained on the 60% of the data.
 #Validation Phase: After each epoch, the model's performance is evaluated on the 40% validation data. This helps in monitoring the model’s performance and tuning hyperparameters to prevent overfitting.
 
