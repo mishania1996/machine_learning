@@ -24,7 +24,7 @@ dataset['column_name'] = 'constant' # makes a const column
 dataset['column_name'] = iterable
 -----Summary-Functions-Maps----------
 dataset.column.describe() # prints ?????
-dataset.column.mean() #takes mean
+dataset.column.mean(axis = 0 or 1) #takes mean. Axis 0 - runs trough rows for a fixed column
 dataset.column.unique() #unique values
 dataset.column.value_counts() #above with number of occurences
 dataset.column.map(lambda p: f(p)) #changes value p to f(p); return no modify
@@ -40,14 +40,19 @@ dataset.reset_index() #makes index sequential. If we have multiindexed df it mak
 dataset.sort_values(by = 'column1', (default) ascending = True) # sorts rows wrt column1
 dataset.sort_values(by = ['col1', 'col2']) #sorts wrt 2 columns as above
 dataset.sort_index() # sorts the index column
---------------
+dataset.reindex(new_index)
+--------------Nulls
 dataset[pd.isnull(dataset.column1)] # returns subdataframe with rows not containing column1 value (NaN)
+dataset.isnull() #returns dataframe with True (if null) and False (if not)
 dataset[pd.notnull(dataset.column1)] # the complement of the above
 dataset.column1.fillna("string") # fills Nan in column1 with string
 dataset.column1.replace('string1', 'string2') #replaces string1 with string2 in the given column
+dataset.any(axis=0) #checks for each row if it has a True value. Returns a Series indexed by row_names and booleans
 ------Renaming-Combining-------
 dataset.rename(columns = {'oldname':'newname'}) #names of columns
 dataset.rename(index = {0:'new_zero', 1 : 'new_one'}) #names of indices
 dataset.rename_axis('name1', axis = 'rows' or 'columns')
 pd.concat([dataset1, dataset2]) # concatenation of rows (number of columns are fixed)
 dataset1.join(dataset2, lsuffix='x', rsuffix = 'y') # concatenates columns (number of indices are fixed)
+dataset = dataset.drop(columns = ['column1','column2']) #drops columns
+dataset = dataset.drop('column1') #drops a column
