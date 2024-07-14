@@ -18,15 +18,16 @@ print("Imported the modules.")
 train_df = pd.read_csv("blabla")
 test_df = pd.read_csv("blabla")
 
-# Keras Input tensors of float values.
-inputs = {
-    'latitude':
-        tf.keras.layers.Input(shape=(1,), dtype=tf.float32,
-                              name='latitude'),
-    'longitude':
-        tf.keras.layers.Input(shape=(1,), dtype=tf.float32,
-                              name='longitude')
-}
+# Assuming the last column is the target variable
+feature_columns = train_df.columns[:-1]
+target_column = train_df.columns[-1]
+
+# Create Input Tensors for each feature in the DataFrame
+inputs = {col: tf.keras.layers.Input(shape=(1,), dtype=tf.float32, name=col) for col in feature_columns}
+
+# Define the output layer
+outputs = tf.keras.layers.Dense(1)(tf.keras.layers.Concatenate()(list(inputs.values())))
+
 
 #@title Define functions to create and train a model, and a plotting function
 def create_model(my_inputs, my_outputs, my_learning_rate):
@@ -86,9 +87,6 @@ preprocessing_layer = tf.keras.layers.Concatenate()(inputs.values())
 
 dense_output = layers.Dense(units=1, name='dense_layer')(preprocessing_layer)
 
-outputs = {
-  'dense_output': dense_output
-}
 
 # Create and compile the model's topography.
 my_model = create_model(inputs, outputs, learning_rate)
